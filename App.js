@@ -2,12 +2,15 @@ import React, {Component} from 'react';
 import MapViewScreen from './src/Pages/MapView';
 import { createStackNavigator, createAppContainer } from "react-navigation";
 import HomeScreen from './src/Pages/Home';
+import MapViewPolygonScreen from './src/Pages/MapViewPolygon';
 
 const AppNavigator = createStackNavigator({
   Home: {
     screen: HomeScreen
   }, MapView: {
     screen: MapViewScreen
+  }, MapViewPolygon: {
+    screen: MapViewPolygonScreen
   }
 },
 {

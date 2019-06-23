@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     }
   
     _onRegionChange = (e) =>{
-      console.log(e)
+      // console.log(e)
       this.setState({region: e})
     }
    
