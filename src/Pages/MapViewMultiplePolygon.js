@@ -1,8 +1,8 @@
 
 import React, {Component} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, Button} from 'react-native';
 import MapView, {Polygon} from "react-native-maps";
-import { LatLangData, CurrentRegion } from '../Services/myCord';
+import { LatLangData, InitialRegion } from '../Services/myCord';
 
 const styles = StyleSheet.create({
     container: {
@@ -17,6 +17,10 @@ const styles = StyleSheet.create({
       ...StyleSheet.absoluteFillObject,
     },
    });
+
+   const CurrentLocation = {
+    latitude: null, longitude: null
+  }
   
   export default class MapViewMultiplePolygonScreen extends Component{
 
@@ -25,8 +29,10 @@ const styles = StyleSheet.create({
     };
     
     state = {
-      region: CurrentRegion,
-      Polygons: LatLangData
+      region: InitialRegion,
+      Polygons: LatLangData,
+      currentregion: CurrentLocation
+
       // Polygons: [
       //   {
       //     label: 'label 1',
@@ -43,14 +49,29 @@ const styles = StyleSheet.create({
     componentDidMount() {
       navigator.geolocation.getCurrentPosition(
          (position) => {
-           console.log('my current position is: ',position);
-           const updatedLocation = Object.assign({}, CurrentRegion, {latitude: position.coords.latitude, longitude: position.coords.longitude });
+           console.log('my current position is: ', position);
+           const updatedLocation = Object.assign({}, InitialRegion, {latitude: position.coords.latitude, longitude: position.coords.longitude });
+           console.log('my current position is updated: ', updatedLocation);
             this.setState({region: updatedLocation })
          }, (err) => {
            console.log('position error ', err)
          }
        );
      }
+
+     onPressGetLocation(){
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          // const updatedLocation = Object.assign({}, CurrentLocation, {latitude: position.coords.latitude, longitude: position.coords.longitude });
+          const updatedLocation = Object.assign({}, CurrentLocation, {latitude: 23.723248, longitude: 90.380803 });
+          console.log('sssss',updatedLocation)
+          this.setState({currentregion : updatedLocation })
+        }, (err) => {
+          console.log('position error ', err)
+        }
+      );
+    }
+     
    
     render() {
       return (
@@ -59,7 +80,7 @@ const styles = StyleSheet.create({
             
             <MapView
               style={styles.map}
-              initialRegion={this.state.region}
+              region={this.state.region}
               // onPress={ (event) => this.mapPressed(event) }
             >
               {
@@ -79,27 +100,17 @@ const styles = StyleSheet.create({
             </MapView>
           </View> 
             <View style={{flex: 1}}>
-              <Text>Latitude: {this.state.region.latitude}</Text>
-              <Text>Longitude: {this.state.region.longitude}</Text>
-              <Text>Latitude Delta: {this.state.region.latitudeDelta}</Text>
-              <Text>Longitude Delta: {this.state.region.longitudeDelta}</Text>
-              {/* {
-                this.state.Polygons.map(e=>{
-                  // console.log(e.label)
-                  return(
-                    <View>
-                      <Text>Label: {e.label}</Text>
-                      {
-                        
-                        e.coordinates.map(c=>{
-                          return(<Text>{c.latitude}</Text>)
-                        })
-                      
-                      }
-                    </View>
-                  )
-                })
-              } */}
+              <Text>Latitude: {this.state.currentregion.latitude}</Text>
+              <Text>Longitude: {this.state.currentregion.longitude}</Text>
+              
+            </View>
+
+            <View style={{flex: 1}}>
+            <Button
+              onPress={()=> {this.onPressGetLocation()}}
+              title="Current Location"
+              color="#841584"
+            />
             </View>
           
         </View>

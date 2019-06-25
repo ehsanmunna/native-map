@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
         <View style={{flex: 1, flexDirection: 'column'}}>
           <View style={styles.container}>
             <MapView
-            style={styles.map}
+              style={styles.map}
               region={this.state.region}
               // onPress={ (event) => this.mapPressed(event) }
             >
@@ -68,9 +68,7 @@ const styles = StyleSheet.create({
                     strokeWidth={3}
                     />
                     : null
-                
                 }
-                
             </MapView>
           </View> 
             <View style={{flex: 1}}>
@@ -79,7 +77,6 @@ const styles = StyleSheet.create({
               <Text>Latitude Delta: {this.state.region.latitudeDelta}</Text>
               <Text>Longitude Delta: {this.state.region.longitudeDelta}</Text>
             </View>
-          
         </View>
       );
     }

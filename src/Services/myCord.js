@@ -50,10 +50,10 @@ const LatLangData = [
     
 ]
 
-const CurrentRegion =  {
+const InitialRegion =  {
     latitude: 23.737491688954222, 
     longitude: 90.38608169183135,
     latitudeDelta: 0.07257755845785141,
     longitudeDelta: 0.048720673419413885,
   }
-  export { LatLangData, CurrentRegion }
+  export { LatLangData, InitialRegion }
