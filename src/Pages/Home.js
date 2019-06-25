@@ -37,8 +37,8 @@ export default class HomeScreen extends Component{
                     </TouchableOpacity>
                 </View>
                 <View style={{flex: 1, flexDirection: 'row'}}>
-                    <TouchableOpacity style={styles.grid}>
-                        <Text>Text</Text>
+                    <TouchableOpacity style={styles.grid} onPress={() => navigate('MapViewMultiplePolygon')}>
+                        <Text>Multiple Polygon</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.grid}>
                         <Text>Text</Text>

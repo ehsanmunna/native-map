@@ -3,6 +3,7 @@ import MapViewScreen from './src/Pages/MapView';
 import { createStackNavigator, createAppContainer } from "react-navigation";
 import HomeScreen from './src/Pages/Home';
 import MapViewPolygonScreen from './src/Pages/MapViewPolygon';
+import MapViewMultiplePolygonScreen from './src/Pages/MapViewMultiplePolygon';
 
 const AppNavigator = createStackNavigator({
   Home: {
@@ -11,10 +12,12 @@ const AppNavigator = createStackNavigator({
     screen: MapViewScreen
   }, MapViewPolygon: {
     screen: MapViewPolygonScreen
+  }, MapViewMultiplePolygon: {
+    screen: MapViewMultiplePolygonScreen
   }
 },
 {
-  initialRouteName: "Home"
+  initialRouteName: "MapViewMultiplePolygon"
 });
 
 const AppContainer = createAppContainer(AppNavigator);
