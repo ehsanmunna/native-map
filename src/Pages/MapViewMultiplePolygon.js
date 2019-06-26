@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import {StyleSheet, Text, View, Button} from 'react-native';
 import MapView, {Polygon} from "react-native-maps";
 import { LatLangData, InitialRegion } from '../Services/myCord';
+import { GetCordination } from '../Services/LatLongMatch';
 
 const styles = StyleSheet.create({
     container: {
@@ -49,9 +50,9 @@ const styles = StyleSheet.create({
     componentDidMount() {
       navigator.geolocation.getCurrentPosition(
          (position) => {
-           console.log('my current position is: ', position);
+           //console.log('my current position is: ', position);
            const updatedLocation = Object.assign({}, InitialRegion, {latitude: position.coords.latitude, longitude: position.coords.longitude });
-           console.log('my current position is updated: ', updatedLocation);
+           //console.log('my current position is updated: ', updatedLocation);
             this.setState({region: updatedLocation })
          }, (err) => {
            console.log('position error ', err)
@@ -71,6 +72,45 @@ const styles = StyleSheet.create({
         }
       );
     }
+
+    mapPressed(event){
+      const currentCord = event.nativeEvent.coordinate;
+      console.log(LatLangData.length)
+        let isMatched = false;
+        // LatLangData.forEach(elem => {
+        //   console.log(Object.assign([], elem.coordinates))
+        // })
+        LatLangData.map(item =>{
+          console.log(JSON.stringify(item.coordinates))
+          console.log(GetCordination(JSON.stringify(item.coordinates), currentCord))
+        })
+        // for (let index = 0; index < LatLangData.length; index++) {
+        // //     const element = LatLangData[index];
+        // //     const cord = JSON.stringify(element.coordinates);
+        //     isMatched = GetCordination(LatLangData[index].coordinates, currentCord);
+        //     // if (isMatched) {
+        //     //   break;  
+        //     // }
+        //     //console.log(isMatched);
+        // }
+
+
+        if (isMatched) {
+          console.log('in your polygon');
+        } else {
+          console.log('outside of your polygon');
+        }
+    }
+
+    // PoligonPressed(){
+    //   navigator.geolocation.getCurrentPosition(
+    //     (position) => {
+    //       console.log('position is :', position);
+    //     }, (err) => {
+    //       console.log('position error ', err)
+    //     }
+    //   );
+    // }
      
    
     render() {
@@ -81,16 +121,18 @@ const styles = StyleSheet.create({
             <MapView
               style={styles.map}
               region={this.state.region}
-              // onPress={ (event) => this.mapPressed(event) }
+              onPress={ (event) => {this.mapPressed(event)} }
             >
               {
                 this.state.Polygons.map((item)=>{
                   return(
                     <Polygon
+                    key={item.label}
+                    // onPress={() => this.PoligonPressed()}
                     coordinates={item.coordinates}
                     strokeColor="#000"
                     fillColor="rgba(255, 0, 38, 0.2)"
-                    strokeWidth={3}
+                    strokeWidth={1}
                     />
                   )
                 })
